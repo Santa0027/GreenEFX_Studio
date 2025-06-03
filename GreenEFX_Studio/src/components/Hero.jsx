@@ -9,28 +9,27 @@ function Hero() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from(titleRef.current, {
+      const tl = gsap.timeline({ delay: 6.5 }); // <-- whole animation delayed by 1 second
+
+      tl.from(titleRef.current, {
         x: -80,
         opacity: 0,
         duration: 1.2,
         ease: 'power3.out',
-      });
-
-      gsap.from(subtitleRef.current, {
+      })
+      .from(subtitleRef.current, {
         x: -60,
         opacity: 0,
         duration: 1.2,
-        delay: 0.3,
         ease: 'power3.out',
-      });
+      }, "-=0.9")  // overlap start a bit before previous ends
+    gsap.from(buttonRef.current, {
+  y: -50,       // GSAP interprets this as transform translateZ(-100px)
+  opacity: 0,
+  duration: 1.2,
+  ease: 'power3.out',
+}, "-=0.8");
 
-     gsap.from(buttonRef.current, {
-        z: -20,
-        opacity: 0,
-        duration: 1.2,
-        delay: 0.6,
-        ease: 'power3.out',
-        });
     }, heroRef);
 
     return () => ctx.revert(); // Cleanup on unmount
@@ -58,7 +57,7 @@ function Hero() {
       <a
         ref={buttonRef}
         href="#"
-        className="inline-block px-8 py-3 rounded-full text-lg font-semibold text-white bg-gradient-to-r from-green-400 via-fuchsia-500 to-blue-500 hover:scale-105 transform transition duration-300 shadow-lg"
+        className="inline-block px-8 py-3 mt-8 rounded-full text-lg font-semibold text-white bg-gradient-to-r from-green-400 via-fuchsia-500 to-blue-500"
       >
         Explore
       </a>

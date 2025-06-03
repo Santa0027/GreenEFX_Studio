@@ -7,33 +7,40 @@ export default function Header() {
   const navLinksRef = useRef([]);
 
   useEffect(() => {
-    // Animate the whole header container
-    gsap.fromTo(
-      headerRef.current,
-      { y: -100, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1.2, ease: 'power3.out' }
-    );
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ delay: 6 }); // Delay entire header animation by 1 second
 
-    // Animate the title
-    gsap.fromTo(
-      titleRef.current,
-      { x: -50, opacity: 0 },
-      { x: 0, opacity: 1, duration: 1, delay: 0.5, ease: 'power2.out' }
-    );
+      // Animate the whole header container
+      tl.fromTo(
+        headerRef.current,
+        { y: -100, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out' }
+      )
 
-    // Animate each nav link with stagger
-    gsap.fromTo(
-      navLinksRef.current,
-      { y: -20, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.8,
-        delay: 0.7,
-        ease: "bounce",
-        stagger: 0.2,
-      }
-    );
+      // Animate the title after header animation
+      .fromTo(
+        titleRef.current,
+        { x: -50, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.8, ease: 'power2.out' },
+        "+=0.1" // small gap after header animation ends
+      )
+
+      // Animate each nav link with stagger after title animation
+      .fromTo(
+        navLinksRef.current,
+        { y: -20, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          ease: "bounce",
+          stagger: 0.2,
+        },
+        "+=0.1" // small gap after title animation ends
+      );
+    }, headerRef);
+
+    return () => ctx.revert();
   }, []);
 
   return (
