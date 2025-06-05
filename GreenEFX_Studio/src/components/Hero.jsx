@@ -7,38 +7,38 @@ function Hero() {
   const subtitleRef = useRef(null);
   const buttonRef = useRef(null);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ delay: 6.5 }); // <-- whole animation delayed by 1 second
+//   useEffect(() => {
+//     const ctx = gsap.context(() => {
+//       const tl = gsap.timeline({ delay: 6.5 }); // <-- whole animation delayed by 1 second
 
-      tl.from(titleRef.current, {
-        x: -80,
-        opacity: 0,
-        duration: 1.2,
-        ease: 'power3.out',
-      })
-      .from(subtitleRef.current, {
-        x: -60,
-        opacity: 0,
-        duration: 1.2,
-        ease: 'power3.out',
-      }, "-=0.9")  // overlap start a bit before previous ends
-    gsap.from(buttonRef.current, {
-  y: -50,       // GSAP interprets this as transform translateZ(-100px)
-  opacity: 0,
-  duration: 1.2,
-  ease: 'power3.out',
-}, "-=0.8");
+//       tl.from(titleRef.current, {
+//         x: -80,
+//         opacity: 0,
+//         duration: 1.2,
+//         ease: 'power3.out',
+//       })
+//       .from(subtitleRef.current, {
+//         x: -60,
+//         opacity: 0,
+//         duration: 1.2,
+//         ease: 'power3.out',
+//       }, "-=0.9")  // overlap start a bit before previous ends
+//     gsap.from(buttonRef.current, {
+//   y: -50,       // GSAP interprets this as transform translateZ(-100px)
+//   opacity: 0,
+//   duration: 1.2,
+//   ease: 'power3.out',
+// }, "-=0.8");
 
-    }, heroRef);
+  //   }, heroRef);
 
-    return () => ctx.revert(); // Cleanup on unmount
-  }, []);
+  //   return () => ctx.revert(); // Cleanup on unmount
+  // }, []);
 
   return (
     <div
       ref={heroRef}
-      className="h-screen w-full absolute z-0 bg-gradient-to-b from-black via-gray-900 to-black flex flex-col justify-center items-start px-12 text-left"
+      className="h-screen w-full relative z-0 bg-gradient-to-b from-black via-gray-900 to-black flex flex-col justify-center items-start px-12 text-left"
     >
       <h1
         ref={titleRef}
